@@ -4,10 +4,11 @@ import CourseCard from "./CourseCard";
 interface Props {
   courses: Course[];
   matches: Set<string>;
+  selected: Course | null;
   onSelect: (c: Course) => void;
 }
 
-export default function CourseGrid({ courses, matches, onSelect }: Props) {
+export default function CourseGrid({ courses, matches, selected, onSelect }: Props) {
   const sections = [100, 200, 300, 400];
   return (
     <div className="gridwrap">
@@ -22,8 +23,10 @@ export default function CourseGrid({ courses, matches, onSelect }: Props) {
                 <CourseCard
                   key={c.id}
                   course={c}
-                  faded={matches.size > 0 && !matches.has(c.id)}
-                  onSelect={onSelect} isFiltered={false} isSearchMatch={false}                />
+                  faded={matches.size === 0 || !matches.has(c.id)}
+                  highlighted={selected ? selected.id === c.id : false}
+                  onSelect={onSelect}
+                />
               ))}
             </div>
           </section>

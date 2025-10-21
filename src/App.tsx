@@ -59,6 +59,7 @@ export default function App() {
           <CourseGrid
             courses={ALL}
             matches={matches}
+            selected={selected}
             onSelect={setSelected}
           />
         </aside>
