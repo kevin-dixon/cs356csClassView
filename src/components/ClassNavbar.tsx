@@ -7,7 +7,7 @@ export const ClassNavbar = () => {
             <NavbarBrand>
                 <h1>BYU CS Classes — Visual Map</h1>
             </NavbarBrand>
-            <NavbarContent justify="start">
+            <NavbarContent justify="center">
                 <NavbarItem>
                     <Link color="foreground" href="/">
                     Programs

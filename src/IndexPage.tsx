@@ -3,7 +3,6 @@ import CourseGrid from "./components/CourseGrid";
 import FilterBar from "./components/FilterBar";
 import DetailPanel from "./components/DetailPanel";
 import { courses as ALL, type Course, type Requirement, type Semester, type Topic } from "./data";
-import { ClassNavbar } from "./components/ClassNavbar";
 
 export const IndexPage = () => {
     const [q, setQ] = useState("");
@@ -51,7 +50,6 @@ export const IndexPage = () => {
         
     return (      
     <div className="app">
-        <ClassNavbar />
         <div className="layout">
             <aside className="left">
             <CourseGrid
