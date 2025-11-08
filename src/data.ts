@@ -10,11 +10,13 @@ export type Topic =
   | "Society";
 
 export type Semester = "Fall" | "Winter" | "Spring" | "Summer";
+export type Department = "CS" | "MATH" | "PHSCS" | "WRTG" | "STAT" | "EC EN" | "IS" | "ARTHC" | "TMA" | "DESAN" | "CSANM";
 
 export interface Course {
   id: string;
   number: number;
   title: string;
+  department?: Department;
   requirement: Requirement;
   credits: number;
   topics: Topic[];
@@ -45,12 +47,14 @@ export const TOPICS: Topic[] = [
   "Society"
 ];
 export const SEMESTERS: Semester[] = ["Fall", "Winter", "Spring", "Summer"];
+export const DEPARTMENTS: Department[] = ["CS", "MATH", "PHSCS", "WRTG", "STAT", "EC EN", "IS", "ARTHC", "TMA", "DESAN", "CSANM"];
 
 export const courses: Course[] = [
   {
     id: "cs142",
     number: 142,
-    title: "Introduction to Computer Programming", // FIXME: This should be replaced by CS 111
+    title: "Introduction to Computer Programming",
+    department: "CS",
     requirement: "Core",
     credits: 3.0,
     topics: ["Programming", "Software Engineering"],
@@ -68,6 +72,7 @@ export const courses: Course[] = [
     id: "cs224",
     number: 224,
     title: "Introduction to Computer Systems",
+    department: "CS",
     requirement: "Core",
     credits: 3.0,
     topics: ["Systems", "Programming"],
@@ -85,6 +90,7 @@ export const courses: Course[] = [
     id: "cs235",
     number: 235,
     title: "Data Structures and Algorithms",
+    department: "CS",
     requirement: "Core",
     credits: 3.0,
     topics: ["Programming", "Theory", "Software Engineering"],
@@ -102,6 +108,7 @@ export const courses: Course[] = [
     id: "cs236",
     number: 236,
     title: "Discrete Structures",
+    department: "CS",
     requirement: "Core",
     credits: 3.0,
     topics: ["Theory"],
@@ -118,7 +125,8 @@ export const courses: Course[] = [
   {
     id: "cs240",
     number: 240,
-    title: "Adv Software Construction", // Updated to match real data
+    title: "Advanced Programming Concepts",
+    department: "CS",
     requirement: "Core",
     credits: 4.0,
     topics: ["Programming", "Software Engineering"],
@@ -1143,6 +1151,267 @@ export const courses: Course[] = [
     prerequisites: [],
     outcomes: ["Digital sculpting"],
     description: "FIXME: Add full description"
+  },
+  // Non-CS courses mentioned in program requirements
+  {
+    id: "math112",
+    number: 112,
+    title: "Calculus 1",
+    department: "MATH",
+    requirement: "Core",
+    credits: 4.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter", "Spring"],
+    prerequisites: [],
+    outcomes: ["Understand differential calculus", "Apply calculus to problem solving"],
+    description: "First semester calculus covering limits, derivatives, and applications."
+  },
+  {
+    id: "math113",
+    number: 113,
+    title: "Calculus 2",
+    department: "MATH",
+    requirement: "Core",
+    credits: 4.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter", "Spring"],
+    prerequisites: ["MATH 112"],
+    outcomes: ["Understand integral calculus", "Apply integration techniques"],
+    description: "Second semester calculus covering integration and series."
+  },
+  {
+    id: "math213",
+    number: 213,
+    title: "Elementary Linear Algebra",
+    department: "MATH",
+    requirement: "Core",
+    credits: 2.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: ["MATH 112"],
+    outcomes: ["Matrix operations", "Vector spaces", "Linear transformations"],
+    description: "Introduction to linear algebra concepts and applications."
+  },
+  {
+    id: "math215",
+    number: 215,
+    title: "Computational Linear Algebra",
+    department: "MATH",
+    requirement: "Core",
+    credits: 1.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: ["MATH 213"],
+    outcomes: ["Computational linear algebra", "Numerical methods"],
+    description: "Computational aspects of linear algebra."
+  },
+  {
+    id: "math290",
+    number: 290,
+    title: "Fundamentals of Mathematics",
+    department: "MATH",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: [],
+    outcomes: ["Mathematical reasoning", "Proof techniques"],
+    description: "Introduction to mathematical reasoning and proof writing."
+  },
+  {
+    id: "math431",
+    number: 431,
+    title: "Probability Theory",
+    department: "MATH",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: [],
+    outcomes: ["Probability fundamentals", "Statistical reasoning"],
+    description: "Introduction to probability theory and applications."
+  },
+  {
+    id: "math485",
+    number: 485,
+    title: "Mathematical Cryptography",
+    department: "MATH",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Theory"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Cryptographic mathematics", "Security protocols"],
+    description: "Mathematical foundations of cryptography."
+  },
+  {
+    id: "phscs121",
+    number: 121,
+    title: "Intro to Newtonian Mechanics",
+    department: "PHSCS",
+    requirement: "Core",
+    credits: 3.0,
+    topics: ["Theory"],
+    semesters: ["Fall", "Winter", "Spring"],
+    prerequisites: [],
+    outcomes: ["Physics fundamentals", "Newtonian mechanics"],
+    description: "Introduction to classical mechanics and physics principles."
+  },
+  {
+    id: "wrtg316",
+    number: 316,
+    title: "Technical Communication",
+    department: "WRTG",
+    requirement: "Core",
+    credits: 3.0,
+    topics: ["Society"],
+    semesters: ["Fall", "Winter", "Spring"],
+    prerequisites: [],
+    outcomes: ["Technical writing", "Communication skills"],
+    description: "Writing and communication skills for technical fields."
+  },
+  {
+    id: "stat121",
+    number: 121,
+    title: "Intro to Stat Data Analysis",
+    department: "STAT",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Data & AI"],
+    semesters: ["Fall", "Winter", "Spring"],
+    prerequisites: [],
+    outcomes: ["Statistical analysis", "Data interpretation"],
+    description: "Introduction to statistical methods and data analysis."
+  },
+  {
+    id: "stat201",
+    number: 201,
+    title: "Stat for Engineers & Scientist",
+    department: "STAT",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Data & AI"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: [],
+    outcomes: ["Engineering statistics", "Scientific data analysis"],
+    description: "Statistical methods for engineering and science applications."
+  },
+  {
+    id: "stat220",
+    number: 220,
+    title: "Stat Modeling for Data Science",
+    department: "STAT",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Data & AI"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: [],
+    outcomes: ["Statistical modeling", "Data science methods"],
+    description: "Statistical modeling techniques for data science."
+  },
+  {
+    id: "ecen220",
+    number: 220,
+    title: "Fund of Digital Systems",
+    department: "EC EN",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Systems"],
+    semesters: ["Fall", "Winter"],
+    prerequisites: [],
+    outcomes: ["Digital systems", "Hardware fundamentals"],
+    description: "Fundamentals of digital systems and computer hardware."
+  },
+  {
+    id: "ecen330",
+    number: 330,
+    title: "Intro Embedded Programming",
+    department: "EC EN",
+    requirement: "Elective",
+    credits: 4.0,
+    topics: ["Systems", "Programming"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Embedded programming", "Microcontroller systems"],
+    description: "Introduction to embedded systems programming."
+  },
+  {
+    id: "ecen425",
+    number: 425,
+    title: "Real-Time Operating Systems",
+    department: "EC EN",
+    requirement: "Elective",
+    credits: 4.0,
+    topics: ["Systems"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Real-time systems", "Operating system design"],
+    description: "Real-time operating systems and embedded applications."
+  },
+  {
+    id: "ecen427",
+    number: 427,
+    title: "Embedded Systems",
+    department: "EC EN",
+    requirement: "Elective",
+    credits: 4.0,
+    topics: ["Systems"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Embedded system design", "Hardware-software integration"],
+    description: "Advanced embedded systems design and implementation."
+  },
+  {
+    id: "is567",
+    number: 567,
+    title: "Cybersecurity & Pen Testing",
+    department: "IS",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Systems"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Cybersecurity", "Penetration testing"],
+    description: "Cybersecurity principles and penetration testing methods."
+  },
+  {
+    id: "arthc111",
+    number: 111,
+    title: "Introduction to Art History",
+    department: "ARTHC",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Society"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Art history", "Cultural understanding"],
+    description: "Survey of art history and cultural movements."
+  },
+  {
+    id: "arthc202",
+    number: 202,
+    title: "World Civilization Since 1500",
+    department: "ARTHC",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["Society"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["World history", "Civilization studies"],
+    description: "Study of world civilizations from 1500 to present."
+  },
+  {
+    id: "tma294",
+    number: 294,
+    title: "History of Animation",
+    department: "TMA",
+    requirement: "Elective",
+    credits: 3.0,
+    topics: ["HCI", "Society"],
+    semesters: [],
+    prerequisites: [],
+    outcomes: ["Animation history", "Media studies"],
+    description: "Historical survey of animation as an art form and industry."
   }
 ];
 
@@ -1157,7 +1426,8 @@ export const programs: Program[] = [
       // Core Requirements (Requirement 1)
       "cs111", "cs191", "cs224", "cs235", "cs236", "cs240", "cs252", "cs260", "cs291", 
       "cs312", "cs324", "cs340", "cs404",
-      // Math/Science Requirements (Requirements 2-4) - External courses not tracked
+      // Math/Science Requirements (Requirements 2-4)
+      "math112", "math213", "math215", "phscs121", "wrtg316",
       // Electives (Requirement 5) - Common selections
       "cs329", "cs330", "cs345", "cs355", "cs356", "cs393", "cs401r", "cs412", "cs416",
       "cs428", "cs430", "cs431", "cs450", "cs452", "cs453", "cs455", "cs456", "cs460",
@@ -1165,7 +1435,11 @@ export const programs: Program[] = [
       "cs501r", "cs513", "cs556", "cs574", "cs575", "cs580",
       // Additional options
       "cs180", "cs202", "cs203", "cs204", "cs256", "cs270", "cs405", "cs478",
-      "cs480", "cs481", "cs482", "cs483", "cs493r", "cs494", "cs495", "cs497r", "cs498r"
+      "cs480", "cs481", "cs482", "cs483", "cs493r", "cs494", "cs495", "cs497r", "cs498r",
+      // Statistics options
+      "stat121", "stat201", "stat220", "math113", "math290", "math431",
+      // Advanced engineering
+      "ecen220", "ecen330", "ecen427", "is567", "math485"
     ]
   },
   {
@@ -1179,7 +1453,8 @@ export const programs: Program[] = [
       "cs111", "cs191", "cs235", "cs291", "csanm150", "desan101",
       // Core after admission (Requirement 2)
       "cs224", "cs236", "cs240", "cs312", "cs324", "cs355", "cs455", "csanm250",
-      // Supporting courses and requirements 3-5 are external
+      // Supporting courses (Requirements 3-5)
+      "math112", "math213", "math215", "phscs121", "wrtg316",
       // Animation specialization (Requirements 6-8)
       "csanm342", "csanm354", "cs404", "desan460",
       "csanm352", "csanm450", "csanm452", "csanm459", "csanm460",
@@ -1192,7 +1467,9 @@ export const programs: Program[] = [
       // Additional electives (Requirement 10)
       "cs498r", "cs500", "cs501r", "cs513", "cs580",
       "csanm210", "csanm252", "csanm258", "csanm340", "csanm351r", "csanm353",
-      "csanm355", "csanm452", "csanm454", "csanm458r", "desan364r"
+      "csanm355", "csanm452", "csanm454", "csanm458r", "desan364r", "ecen425",
+      // Art history requirement
+      "arthc111", "arthc202", "tma294"
     ]
   },
   {

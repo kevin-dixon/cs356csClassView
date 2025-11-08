@@ -137,6 +137,10 @@ h1 {
   background-color: #4A148C;
   color: white;
 }
+.filterbar .chips:nth-of-type(5) .chip:hover { /* Department */
+  background-color: #D32F2F;
+  color: white;
+}
 
 /* ===========================
    Left: Course Grid
@@ -145,6 +149,20 @@ h1 {
   overflow: auto;
   padding-right: 8px;
 }
+
+.department-section {
+  margin-bottom: 24px;
+}
+
+.department-header {
+  margin: 16px 0 12px 0;
+  font-size: 18px;
+  color: #002E5D;
+  font-weight: 700;
+  border-bottom: 2px solid #002E5D;
+  padding-bottom: 4px;
+}
+
 .gridwrap .band {
   margin-bottom: 16px;
 }

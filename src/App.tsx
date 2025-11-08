@@ -4,7 +4,7 @@ import CourseGrid from "./components/CourseGrid";
 import DetailPanel from "./components/DetailPanel";
 import ProgramList from "./components/ProgramList";
 import ProgramDetailPanel from "./components/ProgramDetailPanel";
-import type { Course, Requirement, Topic, Semester, Program } from "./data";
+import type { Course, Requirement, Topic, Semester, Program, Department } from "./data";
 import { courses as ALL, programs } from "./data";
 import "./index.css";
 
@@ -18,6 +18,7 @@ export default function App() {
   const [topic, setTopic] = useState<Topic | null>(null);
   const [sem, setSem] = useState<Semester[]>([]);
   const [program, setProgram] = useState<Program | null>(null);
+  const [department, setDepartment] = useState<Department | null>(null);
   const [selected, setSelected] = useState<Course | null>(null);
   
   // Program-related state
@@ -40,13 +41,14 @@ export default function App() {
       const hitTopic = !topic || c.topics.includes(topic);
       const hitSem = sem.length === 0 || sem.some(s => c.semesters.includes(s));
       const hitProgram = !program || program.courseIds.includes(c.id);
+      const hitDepartment = !department || c.department === department;
 
-      if (hitQ && hitReq && hitTopic && hitSem && hitProgram) {
+      if (hitQ && hitReq && hitTopic && hitSem && hitProgram && hitDepartment) {
         set.add(c.id);
       }
     });
     return set;
-  }, [q, req, topic, sem, program]);
+  }, [q, req, topic, sem, program, department]);
 
   const clear = () => {
     setQ("");
@@ -54,6 +56,7 @@ export default function App() {
     setTopic(null);
     setSem([]);
     setProgram(null);
+    setDepartment(null);
   };
 
   // Function to navigate to courses view with program filter
@@ -112,6 +115,7 @@ export default function App() {
                 topic={topic} setTopic={setTopic}
                 sem={sem} setSem={setSem}
                 program={program} setProgram={setProgram}
+                department={department} setDepartment={setDepartment}
                 clear={clear}
               />
               <DetailPanel course={selected} />
