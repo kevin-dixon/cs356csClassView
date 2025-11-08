@@ -24,6 +24,14 @@ export interface Course {
   description: string;
 }
 
+export interface Program {
+  id: string;
+  name: string;
+  minCredits: number;
+  maxCredits: number;
+  description: string;
+}
+
 export const REQUIREMENTS: Requirement[] = ["Core", "Elective", "GE"];
 export const TOPICS: Topic[] = [
   "Programming",
@@ -532,4 +540,28 @@ export const courses: Course[] = [
     outcomes: ["Understand control theory", "Apply robust optimization methods"],
     description: "Introduction to robust control systems."
   }  
+];
+
+export const programs: Program[] = [
+  {
+    id: "cs-bs",
+    name: "Computer Science Bachelor of Science",
+    minCredits: 120,
+    maxCredits: 128,
+    description: "A comprehensive program covering fundamental computer science concepts, programming, algorithms, and system design. Prepares students for careers in software development, research, and technology innovation."
+  },
+  {
+    id: "cs-ba",
+    name: "Computer Science Bachelor of Arts",
+    minCredits: 115,
+    maxCredits: 122,
+    description: "A flexible program combining computer science with liberal arts education. Ideal for students interested in interdisciplinary applications of computing in fields like digital humanities, business, or creative technologies."
+  },
+  {
+    id: "cs-minor",
+    name: "Computer Science Minor",
+    minCredits: 18,
+    maxCredits: 21,
+    description: "A focused program providing essential programming and computer science skills to complement any major. Perfect for students wanting to add technical expertise to their primary field of study."
+  }
 ];

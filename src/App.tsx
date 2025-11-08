@@ -2,16 +2,25 @@ import { useMemo, useState, useEffect } from "react";
 import FilterBar from "./components/FilterBar";
 import CourseGrid from "./components/CourseGrid";
 import DetailPanel from "./components/DetailPanel";
-import type { Course, Requirement, Topic, Semester } from "./data";
-import { courses as ALL } from "./data";
+import ProgramList from "./components/ProgramList";
+import ProgramDetailPanel from "./components/ProgramDetailPanel";
+import type { Course, Requirement, Topic, Semester, Program } from "./data";
+import { courses as ALL, programs } from "./data";
 import "./index.css";
 
 export default function App() {
+  // Navigation state
+  const [currentView, setCurrentView] = useState<"courses" | "programs">("courses");
+  
+  // Course-related state
   const [q, setQ] = useState("");
   const [req, setReq] = useState<Requirement | null>(null);
   const [topic, setTopic] = useState<Topic | null>(null);
   const [sem, setSem] = useState<Semester[]>([]);
   const [selected, setSelected] = useState<Course | null>(null);
+  
+  // Program-related state
+  const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
 
   // ✅ Combined matches: search + filters
   const matches = useMemo(() => {
@@ -52,28 +61,62 @@ export default function App() {
 
   return (
     <div className="app">
-      <header><h1>BYU CS Classes — Visual Map</h1></header>
+      <header>
+        <h1>BYU CS Classes — Visual Map</h1>
+        <nav className="nav-tabs">
+          <button 
+            className={`nav-tab ${currentView === "courses" ? "active" : ""}`}
+            onClick={() => setCurrentView("courses")}
+          >
+            Courses
+          </button>
+          <button 
+            className={`nav-tab ${currentView === "programs" ? "active" : ""}`}
+            onClick={() => setCurrentView("programs")}
+          >
+            Programs
+          </button>
+        </nav>
+      </header>
 
       <main className="layout">
-        <aside className="left">
-          <CourseGrid
-            courses={ALL}
-            matches={matches}
-            selected={selected}
-            onSelect={setSelected}
-          />
-        </aside>
+        {currentView === "courses" ? (
+          <>
+            <aside className="left">
+              <CourseGrid
+                courses={ALL}
+                matches={matches}
+                selected={selected}
+                onSelect={setSelected}
+              />
+            </aside>
 
-        <section className="right">
-          <FilterBar
-            q={q} setQ={setQ}
-            req={req} setReq={setReq}
-            topic={topic} setTopic={setTopic}
-            sem={sem} setSem={setSem}
-            clear={clear}
-          />
-          <DetailPanel course={selected} />
-        </section>
+            <section className="right">
+              <FilterBar
+                q={q} setQ={setQ}
+                req={req} setReq={setReq}
+                topic={topic} setTopic={setTopic}
+                sem={sem} setSem={setSem}
+                clear={clear}
+              />
+              <DetailPanel course={selected} />
+            </section>
+          </>
+        ) : (
+          <>
+            <aside className="left">
+              <ProgramList
+                programs={programs}
+                selected={selectedProgram}
+                onSelect={setSelectedProgram}
+              />
+            </aside>
+
+            <section className="right">
+              <ProgramDetailPanel program={selectedProgram} />
+            </section>
+          </>
+        )}
       </main>
     </div>
   );

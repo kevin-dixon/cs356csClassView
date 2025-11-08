@@ -10,10 +10,39 @@ header {
   padding: 16px 20px;
   border-bottom: 1px solid #eee;
   background: #fafafa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 h1 {
   margin: 0;
   font-size: 20px;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-tab {
+  padding: 8px 16px;
+  border: 2px solid #002E5D;
+  background: white;
+  color: #002E5D;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.nav-tab:hover {
+  background: #f0f4ff;
+}
+
+.nav-tab.active {
+  background: #002E5D;
+  color: white;
 }
 
 /* Layout */
@@ -218,4 +247,82 @@ h1 {
 .outcomes {
   margin: 8px 0 0;
   padding-left: 18px;
+}
+
+/* ===========================
+   Program Cards
+   =========================== */
+.programcard {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 2px solid #d9d9d9;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.15s, transform 0.05s;
+}
+
+.programcard:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+  border-color: #002E5D;
+}
+
+.programcard.highlight {
+  border: 2px solid #4871be;
+}
+
+.program-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.program-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.program-name {
+  font-weight: 700;
+  font-size: 18px;
+  color: #002E5D;
+  flex: 1;
+}
+
+.program-credits {
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.program-description {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* ===========================
+   Program List
+   =========================== */
+.program-list {
+  padding: 16px;
+}
+
+.program-list h2 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  color: #002E5D;
+}
+
+.programs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
