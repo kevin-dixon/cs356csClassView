@@ -12,15 +12,14 @@ body {
 }
 
 /* Header */
-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid #eee;
-  background: #fafafa;
-}
 h1 {
   margin: 0;
   font-size: 20px;
 }
+.navbar-container {
+  justify-content: left;
+}
+
 
 /* Layout */
 .app .layout {

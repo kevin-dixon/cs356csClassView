@@ -3,17 +3,19 @@ import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link} from "@heroui/reac
 export const ClassNavbar = () => {
 
     return (
-        <Navbar>
-            <NavbarBrand>
-                <h1>BYU CS Classes — Visual Map</h1>
+        <Navbar className="border-b border-solid border-2 border-[#eee] bg-[#fafafa] navbar-container max-w-[2048] gap-4">
+            <NavbarBrand className="grow-[0.5] navbar-brand">
+                <Link color="foreground" className="font-bold text-xl" href="/">
+                    BYU CS Classes — Visual Map
+                </Link>
             </NavbarBrand>
-            <NavbarContent justify="center">
-                <NavbarItem>
+            <NavbarContent className="gap-16">
+                <NavbarItem data-justify>
                     <Link color="foreground" href="/">
                     Programs
                     </Link>
                 </NavbarItem>
-                <NavbarItem>
+                <NavbarItem >
                     <Link color="foreground" href="/classes">
                     Classes
                     </Link>
