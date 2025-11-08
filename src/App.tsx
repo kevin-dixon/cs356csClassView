@@ -17,6 +17,7 @@ export default function App() {
   const [req, setReq] = useState<Requirement | null>(null);
   const [topic, setTopic] = useState<Topic | null>(null);
   const [sem, setSem] = useState<Semester[]>([]);
+  const [program, setProgram] = useState<Program | null>(null);
   const [selected, setSelected] = useState<Course | null>(null);
   
   // Program-related state
@@ -38,15 +39,28 @@ export default function App() {
       const hitReq = !req || c.requirement === req;
       const hitTopic = !topic || c.topics.includes(topic);
       const hitSem = sem.length === 0 || sem.some(s => c.semesters.includes(s));
+      const hitProgram = !program || program.courseIds.includes(c.id);
 
-      if (hitQ && hitReq && hitTopic && hitSem) {
+      if (hitQ && hitReq && hitTopic && hitSem && hitProgram) {
         set.add(c.id);
       }
     });
     return set;
-  }, [q, req, topic, sem]);
+  }, [q, req, topic, sem, program]);
 
   const clear = () => {
+    setQ("");
+    setReq(null);
+    setTopic(null);
+    setSem([]);
+    setProgram(null);
+  };
+
+  // Function to navigate to courses view with program filter
+  const viewCoursesForProgram = (programToFilter: Program) => {
+    setCurrentView("courses");
+    setProgram(programToFilter);
+    // Clear other filters to focus on the program
     setQ("");
     setReq(null);
     setTopic(null);
@@ -97,6 +111,7 @@ export default function App() {
                 req={req} setReq={setReq}
                 topic={topic} setTopic={setTopic}
                 sem={sem} setSem={setSem}
+                program={program} setProgram={setProgram}
                 clear={clear}
               />
               <DetailPanel course={selected} />
@@ -113,7 +128,10 @@ export default function App() {
             </aside>
 
             <section className="right">
-              <ProgramDetailPanel program={selectedProgram} />
+              <ProgramDetailPanel 
+                program={selectedProgram} 
+                onViewCourses={viewCoursesForProgram}
+              />
             </section>
           </>
         )}

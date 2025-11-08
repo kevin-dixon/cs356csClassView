@@ -1,5 +1,5 @@
-import type { Requirement, Topic, Semester } from "../data";
-import { REQUIREMENTS, TOPICS, SEMESTERS } from "../data";
+import type { Requirement, Topic, Semester, Program } from "../data";
+import { REQUIREMENTS, TOPICS, SEMESTERS, PROGRAMS } from "../data";
 
 interface Props {
   q: string;
@@ -10,6 +10,8 @@ interface Props {
   setTopic: (t: Topic | null) => void;
   sem: Semester[];
   setSem: (s: Semester[]) => void;
+  program: Program | null;
+  setProgram: (p: Program | null) => void;
   clear: () => void;
 }
 
@@ -18,6 +20,7 @@ export default function FilterBar({
   req, setReq,
   topic, setTopic,
   sem, setSem,
+  program, setProgram,
   clear
 }: Props) {
   return (
@@ -79,6 +82,22 @@ export default function FilterBar({
               }}
             >
               {s}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Program filter */}
+      <div className="filter-group">
+        <span className="filter-label">Program:</span>
+        <div className="chips">
+          {PROGRAMS.map(p => (
+            <button
+              key={p.id}
+              className={`chip ${program && program.id === p.id ? "active" : ""}`}
+              onClick={() => setProgram(program && program.id === p.id ? null : p)}
+            >
+              {p.name}
             </button>
           ))}
         </div>
