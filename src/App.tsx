@@ -4,6 +4,7 @@ import CourseGrid from "./components/CourseGrid";
 import DetailPanel from "./components/DetailPanel";
 import ProgramList from "./components/ProgramList";
 import ProgramDetailPanel from "./components/ProgramDetailPanel";
+import CourseModal from "./components/CourseModal";
 import type { Course, Requirement, Topic, Semester, Program, Department } from "./data";
 import { courses as ALL, programs } from "./data";
 import "./index.css";
@@ -24,6 +25,10 @@ export default function App() {
   // Program-related state
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [isProgramExpanded, setIsProgramExpanded] = useState(false);
+  
+  // Modal state
+  const [modalCourse, setModalCourse] = useState<Course | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // ✅ Combined matches: search + filters
   const matches = useMemo(() => {
@@ -80,6 +85,17 @@ export default function App() {
   // Function to handle back button (collapse the panel)
   const handleBackFromRequirements = () => {
     setIsProgramExpanded(false);
+  };
+
+  // Modal handlers
+  const handleCourseModalOpen = (course: Course) => {
+    setModalCourse(course);
+    setIsModalOpen(true);
+  };
+
+  const handleCourseModalClose = () => {
+    setIsModalOpen(false);
+    setModalCourse(null);
   };
 
   useEffect(() => {
@@ -152,11 +168,20 @@ export default function App() {
                 onViewRequirements={viewRequirementsForProgram}
                 isExpanded={isProgramExpanded}
                 onBack={handleBackFromRequirements}
+                onCourseClick={handleCourseModalOpen}
+                allCourses={ALL}
               />
             </section>
           </div>
         )}
       </main>
+
+      {/* Course Modal */}
+      <CourseModal 
+        course={modalCourse}
+        isOpen={isModalOpen}
+        onClose={handleCourseModalClose}
+      />
     </div>
   );
 }

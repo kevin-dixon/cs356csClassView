@@ -11,6 +11,30 @@ interface Props {
 }
 
 export default function ProgramDetailPanel({ program, onViewCourses, onViewRequirements, isExpanded, onBack, onCourseClick, allCourses }: Props) {
+  // Extract course number from course string like "CS 111 - Intro to Computer Science"
+  const findCourseFromString = (courseString: string): Course | null => {
+    if (!allCourses || !onCourseClick) return null;
+    
+    // Extract department and number from course string
+    const match = courseString.match(/^(CS|MATH|PHSCS|WRTG|STAT|EC EN|IS|ARTHC|TMA|DESAN|CSANM)\s+(\d+)/);
+    if (!match) return null;
+    
+    const [, department, numberStr] = match;
+    const number = parseInt(numberStr);
+    
+    // Find matching course in allCourses
+    return allCourses.find(course => 
+      course.number === number && 
+      (course.department === department || (department === "CS" && !course.department))
+    ) || null;
+  };
+
+  const handleCourseClick = (courseString: string) => {
+    const course = findCourseFromString(courseString);
+    if (course && onCourseClick) {
+      onCourseClick(course);
+    }
+  };
   if (!program) {
     return (
       <div className="detail empty">
@@ -52,9 +76,25 @@ export default function ProgramDetailPanel({ program, onViewCourses, onViewRequi
                 <p className="requirement-description">{requirement.description}</p>
               )}
               <ul className="requirement-courses">
-                {requirement.courses.map((course, courseIndex) => (
-                  <li key={courseIndex}>{course}</li>
-                ))}
+                {requirement.courses.map((course, courseIndex) => {
+                  const courseData = findCourseFromString(course);
+                  const isClickable = courseData && onCourseClick;
+                  
+                  return (
+                    <li key={courseIndex}>
+                      {isClickable ? (
+                        <span 
+                          className="course-link" 
+                          onClick={() => handleCourseClick(course)}
+                        >
+                          {course}
+                        </span>
+                      ) : (
+                        course
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

@@ -298,17 +298,6 @@ h1 {
   font-size: 18px;
 }
 
-.program-type-badge {
-  display: inline-block;
-  background: #e8f0ff;
-  color: #002E5D;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  border: 1px solid #d0e0ff;
-}
 .detail .desc { color: #444; }
 .detail .row {
   display: grid;
