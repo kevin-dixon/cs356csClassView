@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Requirement, Topic, Semester, Program, Department } from "../data";
 import { REQUIREMENTS, TOPICS, SEMESTERS, PROGRAMS, DEPARTMENTS } from "../data";
 
@@ -26,9 +27,20 @@ export default function FilterBar({
   department, setDepartment,
   clear
 }: Props) {
+  const [isExpanded, setIsExpanded] = useState(true);
+
   return (
     <div className="filterbar">
-      {/* Search input */}
+      {/* Collapsible header */}
+      <div className="filterbar-header" onClick={() => setIsExpanded(!isExpanded)}>
+        <h3>Filters</h3>
+        <span className={`dropdown-arrow ${isExpanded ? 'expanded' : ''}`}>▼</span>
+      </div>
+
+      {/* Filters content */}
+      {isExpanded && (
+        <div className="filterbar-content">
+          {/* Search input */}
       <input
         type="text"
         value={q}
@@ -126,6 +138,8 @@ export default function FilterBar({
       <div className="filter-actions">
         <button className="clear" onClick={clear}>Clear All</button>
       </div>
+        </div>
+      )}
     </div>
   );
 }

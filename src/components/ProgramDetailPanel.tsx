@@ -1,11 +1,40 @@
-import type { Program } from "../data";
+import type { Program, Course } from "../data";
 
 interface Props {
   program: Program | null;
   onViewCourses: (program: Program) => void;
+  onViewRequirements: (program: Program) => void;
+  isExpanded: boolean;
+  onBack: () => void;
+  onCourseClick?: (course: Course) => void;
+  allCourses?: Course[];
 }
 
-export default function ProgramDetailPanel({ program, onViewCourses }: Props) {
+export default function ProgramDetailPanel({ program, onViewCourses, onViewRequirements, isExpanded, onBack, onCourseClick, allCourses }: Props) {
+  // Extract course number from course string like "CS 111 - Intro to Computer Science"
+  const findCourseFromString = (courseString: string): Course | null => {
+    if (!allCourses || !onCourseClick) return null;
+    
+    // Extract department and number from course string
+    const match = courseString.match(/^(CS|MATH|PHSCS|WRTG|STAT|EC EN|IS|ARTHC|TMA|DESAN|CSANM)\s+(\d+)/);
+    if (!match) return null;
+    
+    const [, department, numberStr] = match;
+    const number = parseInt(numberStr);
+    
+    // Find matching course in allCourses
+    return allCourses.find(course => 
+      course.number === number && 
+      (course.department === department || (department === "CS" && !course.department))
+    ) || null;
+  };
+
+  const handleCourseClick = (courseString: string) => {
+    const course = findCourseFromString(courseString);
+    if (course && onCourseClick) {
+      onCourseClick(course);
+    }
+  };
   if (!program) {
     return (
       <div className="detail empty">
@@ -14,75 +43,78 @@ export default function ProgramDetailPanel({ program, onViewCourses }: Props) {
     );
   }
 
-  // Career info based on program type
-  const getCareerInfo = (programId: string) => {
-    switch (programId) {
-      case "cs-bs":
-        return [
-          "Software Developer",
-          "Research Scientist", 
-          "Systems Architect",
-          "Product Manager",
-          "Data Scientist",
-          "Cybersecurity Analyst"
-        ];
-      case "cs-animation-games-bs":
-        return [
-          "Animation Programmer",
-          "Game Developer",
-          "Visual Effects Artist",
-          "Technical Director",
-          "Graphics Programmer",
-          "Game Engine Developer"
-        ];
-      default:
-        return [
-          "Software Developer",
-          "Data Scientist", 
-          "Systems Analyst",
-          "Product Manager",
-          "Research Scientist"
-        ];
-    }
-  };
-
   return (
-    <div className="detail">
+    <div className={`detail ${isExpanded ? 'expanded' : ''}`}>
+      {isExpanded && (
+        <button className="back-button" onClick={onBack}>
+          ‹ Back
+        </button>
+      )}
+      
       <h2>{program.name}</h2>
       <p className="desc">{program.description}</p>
 
       <div className="row">
         <strong>Credit Hours:</strong>
-        <span>{program.minCredits} - {program.maxCredits} credits</span>
-      </div>
-
-      <div>
-        <strong>Program Overview</strong>
-        <p style={{ marginTop: '8px', fontSize: '14px', lineHeight: '1.4' }}>
-          {program.id === "cs-bs" ? 
-            "Students graduating with this degree are employed primarily in software development positions, with career paths that are highly diverse. Alumni can be found in big tech companies, startups, government research labs, and non-profit companies developing everything from web applications to AI systems." :
-          program.id === "cs-animation-games-bs" ?
-            "Alumni from this program work at top animation studios including Pixar, DreamWorks, Disney Animation, and major game studios. BYU animation graduates have contributed to blockbuster films and cutting-edge interactive entertainment." :
-            "This program provides comprehensive education in computer science fundamentals and advanced topics. Students gain practical experience through projects, internships, and collaborative learning opportunities."
-          }
-        </p>
+        <span>{program.totalHours} hours</span>
       </div>
 
       <div>
         <strong>Career Opportunities</strong>
-        <ul className="outcomes">
-          {getCareerInfo(program.id).map((career, index) => (
-            <li key={index}>{career}</li>
-          ))}
-        </ul>
+        <p style={{ marginTop: '8px', fontSize: '14px', lineHeight: '1.4' }}>
+          {program.careers}
+        </p>
       </div>
 
+      {isExpanded && (
+        <div className="requirements-section">
+          <h3>Program Requirements</h3>
+          {program.requirements.map((requirement, index) => (
+            <div key={index} className="requirement-group">
+              <h4 className="requirement-title">{requirement.title}</h4>
+              {requirement.description && (
+                <p className="requirement-description">{requirement.description}</p>
+              )}
+              <ul className="requirement-courses">
+                {requirement.courses.map((course, courseIndex) => {
+                  const courseData = findCourseFromString(course);
+                  const isClickable = courseData && onCourseClick;
+                  
+                  return (
+                    <li key={courseIndex}>
+                      {isClickable ? (
+                        <span 
+                          className="course-link" 
+                          onClick={() => handleCourseClick(course)}
+                        >
+                          {course}
+                        </span>
+                      ) : (
+                        course
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="program-actions">
+        {!isExpanded && (
+          <button 
+            className="view-requirements-btn primary"
+            onClick={() => onViewRequirements(program)}
+          >
+            View Requirements
+          </button>
+        )}
         <button 
-          className="view-courses-btn"
+          className="view-courses-btn secondary"
           onClick={() => onViewCourses(program)}
         >
-          View Courses
+          Go to Courses
         </button>
       </div>
     </div>

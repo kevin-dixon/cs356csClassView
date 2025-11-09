@@ -26,12 +26,22 @@ export interface Course {
   description: string;
 }
 
+export interface ProgramRequirement {
+  title: string;
+  description?: string;
+  courses: string[];
+}
+
 export interface Program {
   id: string;
   name: string;
-  minCredits: number;
-  maxCredits: number;
+  type: 'Major' | 'Minor';
+  college: string;
   description: string;
+  shortDescription: string;
+  totalHours: string;
+  careers: string;
+  requirements: ProgramRequirement[];
   courseIds: string[];
 }
 
@@ -1417,109 +1427,324 @@ export const courses: Course[] = [
 
 export const programs: Program[] = [
   {
-    id: "cs-bs",
-    name: "Computer Science (BS)",
-    minCredits: 74,
-    maxCredits: 75,
-    description: "Computer Science studies the theory and practice of computing in society. Because computing is embedded in nearly every aspect of society, a degree in computer science can lead you to practicing in a wide variety of fields.",
+    id: 'cs-bs',
+    name: 'Computer Science (BS)',
+    type: 'Major',
+    college: 'Physical and Mathematical Sciences',
+    description: 'Computer Science studies the theory and practice of computing in society. Because computing is embedded in nearly every aspect of society, a degree in computer science can lead you to practicing in a wide variety of fields.',
+    shortDescription: 'Comprehensive computer science degree covering theory and practice of computing across diverse fields.',
+    totalHours: '74-75',
+    careers: 'Students graduating with one of our degrees are employed primarily in software development positions, with career paths that are highly diverse, depending on where their interest lies. Computer science alumni can be found in big tech companies, startups, government research labs, and non-profit companies. Alumni may be developing web or mobile applications, using machine learning to develop medical diagnostic algorithms, designing secure software for a bank, creating a new game, or developing software to control a swarm of drones. Alumni work in diverse industries, including finance, automotive, retail, health, and government contracting. Students also use a B.S. in Computer Science as a foundation to pursue graduate school in computer science, a career in academia, or a law degree.',
+    requirements: [
+      {
+        title: 'Requirement 1 — Complete 13 Core Courses',
+        courses: ['CS 111 - Intro to Computer Science', 'CS 191 - Exploring CS', 'CS 224 - Computer Systems', 'CS 235 - Data Structures', 'CS 236 - Discrete Structure', 'CS 240 - Adv Software Construction', 'CS 252 - Intro to Computational Theory', 'CS 260 - Web Programming', 'CS 291 - Careers in CS', 'CS 312 - Algorithm Design & Analysis', 'CS 324 - Systems Programming', 'CS 340 - Software Design', 'CS 404 - Ethics & Computers in Society']
+      },
+      {
+        title: 'Requirement 2 — Complete 5 Supporting Courses',
+        courses: ['MATH 112 - Calculus 1', 'MATH 213 - Elementary Linear Algebra', 'MATH 215 - Computational Linear Algebra', 'PHSCS 121 - Intro to Newtonian Mechanics', 'WRTG 316 - Technical Communication']
+      },
+      {
+        title: 'Requirement 3 — Complete 1 of 3 Statistics Courses',
+        courses: ['MATH 431 - Probability Theory', 'STAT 121 - Intro to Stat Data Analysis', 'STAT 201 - Stat for Engineers & Scientist']
+      },
+      {
+        title: 'Requirement 4 — Complete 1 of 3 Advanced Math Courses',
+        courses: ['MATH 113 - Calculus 2', 'MATH 290 - Fundamentals of Mathematics', 'STAT 220 - Stat Modeling for Data Science']
+      },
+      {
+        title: 'Requirement 5 — Complete 21 hours from Advanced CS Courses',
+        description: 'Choose from multiple options below:',
+        courses: [
+          'CS 329 - QA & DevOps', 'CS 330 - Concepts of Programng Lang', 'CS 345 - Operating Systems Design', 'CS 355 - Graphics and Image Processing', 'CS 356 - Advanced Techniques in HCI', 'CS 393 - Collaborative Probl Solving', 'CS 401R - Topics in Computer Science', 'CS 412 - Linear Prog/Convx Optimization', 'CS 416 - Advanced Algorithms', 'CS 428 - Software Engineering', 'CS 430 - Formal Verification', 'CS 431 - Algorithmic Lang & Compilers', 'CS 450 - Computer Vision', 'CS 452 - Database Modeling Concepts', 'CS 453 - Fund of Information Retrieval', 'CS 455 - Computer Graphics', 'CS 456 - Mobile and Ubiquitous HCI', 'CS 460 - Comp Comms & Networking', 'CS 462 - Distributed System Design', 'CS 465 - Computer Security', 'CS 466 - Blockchain Technologies', 'CS 470 - Intro Artificial Intelligence', 'CS 471 - Voice Interfaces', 'CS 473 - Advanced Machine Learning', 'CS 474 - Deep Learning', 'CS 479 - Intro to Machine Translation', 'CS 486 - Verification and Validation', 'CS 501R - Adv Topics in Computer Sci', 'CS 513 - Robust Control', 'CS 556 - Inter Soft Systems', 'CS 574 - Transformers for NLP', 'CS 575 - Intro to Network Science', 'CS 580 - Theory of Predictive Modeling',
+          'CS 180 - Intro to Data Science', 'CS 202 - Software Engineering Lab 1', 'CS 203 - Software Engineering Lab 2', 'CS 204 - Software Engineering Lab 3', 'CS 256 - Introduction to HCI', 'CS 270 - Intro to Machine Learning', 'CS 405 - Software Business', 'CS 478 - Tools for Machine Learning', 'EC EN 220 - Fund of Digital Systems',
+          'EC EN 330 - Intro Embedded Programming', 'EC EN 427 - Embedded Systems', 'IS 567 - Cybersecurity & Pen Testing', 'MATH 485 - Mathematical Cryptography',
+          'CS 480 - Soft Eng Capstone 1', 'CS 481 - Soft Eng Capstone 2', 'CS 482 - Data Science Capstone 1', 'CS 483 - Data Science Capstone 2', 'CS 493R - Computing Competitions', 'CS 494 - Capstone 1', 'CS 495 - Capstone 2', 'CS 497R - Undergraduate Research', 'CS 498R - Undergraduate Special Projects'
+        ]
+      },
+      {
+        title: 'Requirement 6 — Senior Exit Interview',
+        courses: ['Complete Senior Exit Interview with the CS department during your last semester or term']
+      }
+    ],
     courseIds: [
-      // Core Requirements (Requirement 1)
-      "cs111", "cs191", "cs224", "cs235", "cs236", "cs240", "cs252", "cs260", "cs291", 
-      "cs312", "cs324", "cs340", "cs404",
-      // Math/Science Requirements (Requirements 2-4)
-      "math112", "math213", "math215", "phscs121", "wrtg316",
-      // Electives (Requirement 5) - Common selections
-      "cs329", "cs330", "cs345", "cs355", "cs356", "cs393", "cs401r", "cs412", "cs416",
-      "cs428", "cs430", "cs431", "cs450", "cs452", "cs453", "cs455", "cs456", "cs460",
-      "cs462", "cs465", "cs466", "cs470", "cs471", "cs473", "cs474", "cs479", "cs486",
-      "cs501r", "cs513", "cs556", "cs574", "cs575", "cs580",
-      // Additional options
-      "cs180", "cs202", "cs203", "cs204", "cs256", "cs270", "cs405", "cs478",
-      "cs480", "cs481", "cs482", "cs483", "cs493r", "cs494", "cs495", "cs497r", "cs498r",
-      // Statistics options
-      "stat121", "stat201", "stat220", "math113", "math290", "math431",
-      // Advanced engineering
-      "ecen220", "ecen330", "ecen427", "is567", "math485"
+      // Requirement 1 - Core courses (13 courses)
+      'cs111', 'cs191', 'cs224', 'cs235', 'cs236', 'cs240', 'cs252', 'cs260', 'cs291', 'cs312', 'cs324', 'cs340', 'cs404',
+      // Requirement 2 - Supporting courses (5 courses)
+      'math112', 'math213', 'math215', 'phscs121', 'wrtg316',
+      // Requirement 3 - Statistics option (1 of 3)
+      'math431', 'stat121', 'stat201',
+      // Requirement 4 - Math option (1 of 3)
+      'math113', 'math290', 'stat220',
+      // Requirement 5 - Advanced CS courses (21 hours from multiple options)
+      'cs329', 'cs330', 'cs345', 'cs355', 'cs356', 'cs393', 'cs401r', 'cs412', 'cs416', 'cs428', 'cs430', 'cs431', 'cs450', 'cs452', 'cs453', 'cs455', 'cs456', 'cs460', 'cs462', 'cs465', 'cs466', 'cs470', 'cs471', 'cs473', 'cs474', 'cs479', 'cs486', 'cs501r', 'cs513', 'cs556', 'cs574', 'cs575', 'cs580',
+      'cs180', 'cs202', 'cs203', 'cs204', 'cs256', 'cs270', 'cs405', 'cs478', 'ecen220',
+      'ecen330', 'ecen427', 'is567', 'math485',
+      'cs480', 'cs481', 'cs482', 'cs483', 'cs493r', 'cs494', 'cs495', 'cs497r', 'cs498r'
     ]
   },
   {
-    id: "cs-animation-games-bs",
-    name: "Computer Science: Animation and Games (BS)",
-    minCredits: 77,
-    maxCredits: 81.5,
-    description: "The Computer Science Animation and Games Emphasis gives students the opportunity to learn both the technical and artistic side of creating and implementing digital animation and games, preparing them for technical careers with animation and game programming studios.",
+    id: 'cs-animation-games-bs',
+    name: 'Computer Science: Animation and Games (BS)',
+    type: 'Major',
+    college: 'Physical and Mathematical Sciences',
+    description: 'The Computer Science Animation and Games Emphasis gives students the opportunity to learn both the technical and artistic side of creating and implementing digital animation and games, preparing them for technical careers with animation and game programming studios. Students in the program collaborate regularly with students in the Animation BFA. Students and faculty who work on both the CS emphasis and the Animation BFA are part of BYU\'s Center for Animation.',
+    shortDescription: 'Combines computer science with animation and game development for careers in entertainment and interactive media.',
+    totalHours: '77-81.5',
+    careers: 'A valuable feature of the Animation and Games Emphasis is that students earn a degree in computer science. This qualifies them for software development in a wide variety of areas. Many of the alumni from this program have accepted positions at animation studios. Alumni are employed with some of the top studios in the industry, including Pixar, DreamWorks, Disney Animation, EntertainmentArts, Industrial Light + Magic, Avalanche Studios, and LucasFilmsAnimation. Alumni students have contributed to a number of recent blockbuster films, including Pirates of the Caribbean: Curse of the Dead Man\'s Chest, Chronicles of Narnia: The Lion the Witch and the Wardrobe, Chronicles of Narnia: Prince Caspian, Cars, Ratatouille, Shrek 3, and Transformers.',
+    requirements: [
+      {
+        title: 'Requirement 1 — Complete 6 Prerequisite Courses',
+        courses: ['CS 111 - Intro to Computer Science', 'CS 191 - Exploring CS', 'CS 235 - Data Structures', 'CS 291 - Careers in CS', 'CSANM 150 - Intro to 3D Graphics', 'DESAN 101 - Intro to Drawing for Pre-Anim']
+      },
+      {
+        title: 'Program Admission',
+        courses: ['Be admitted to the program']
+      },
+      {
+        title: 'Requirement 2 — Complete 8 Core Courses After Admission',
+        courses: ['CS 224 - Computer Systems', 'CS 236 - Discrete Structure', 'CS 240 - Adv Software Construction', 'CS 312 - Algorithm Design & Analysis', 'CS 324 - Systems Programming', 'CS 355 - Graphics and Image Processing', 'CS 455 - Computer Graphics', 'CSANM 250 - Interm 3D Computer Graphics']
+      },
+      {
+        title: 'Requirement 3 — Complete 5 Supporting Courses',
+        courses: ['MATH 112 - Calculus 1', 'MATH 213 - Elementary Linear Algebra', 'MATH 215 - Computational Linear Algebra', 'PHSCS 121 - Intro to Newtonian Mechanics', 'WRTG 316 - Technical Communication']
+      },
+      {
+        title: 'Requirement 4 — Complete 1 of 2 Statistics Courses',
+        courses: ['STAT 121 - Intro to Stat Data Analysis', 'STAT 201 - Stat for Engineers & Scientist']
+      },
+      {
+        title: 'Requirement 5 — Complete 1 of 3 Math Options',
+        courses: ['MATH 113 - Calculus 2', 'MATH 290 - Fundamentals of Mathematics', 'STAT 220 - Stat Modeling for Data Science']
+      },
+      {
+        title: 'Requirement 6 — Complete 1 of 2 Animation Specialization Courses',
+        courses: ['CSANM 342 - Real-time Techniques', 'CSANM 354 - Materials and Surfacing']
+      },
+      {
+        title: 'Requirement 7 — Complete 1 of 2 Ethics Courses',
+        courses: ['CS 404 - Ethics & Computers in Society', 'DESAN 460 - Business & Ethics in Animation']
+      },
+      {
+        title: 'Requirement 8 — Complete 6 hours from Production Courses',
+        courses: ['CSANM 352 - Animated Film Production 1', 'CSANM 450 - Animated Film Production 2', 'CSANM 452 - Animated Film Production 3', 'CSANM 459 - Video Game Production 1', 'CSANM 460 - Video Game Production 2']
+      },
+      {
+        title: 'Requirement 9 — Complete 6 hours from CS Electives',
+        courses: ['CS 252 - Intro to Computational Theory', 'CS 256 - Introduction to HCI', 'CS 260 - Web Programming', 'CS 270 - Intro to Machine Learning', 'CS 329 - QA & DevOps', 'CS 330 - Concepts of Programing Lang', 'CS 340 - Software Design', 'CS 345 - Operating Systems Design', 'CS 356 - Advanced Techniques in HCI', 'CS 393 - Collaborative Probl Solving', 'CS 401R - Topics in Computer Science', 'CS 412 - Linear Prog/Convx Optimization', 'CS 416 - Advanced Algorithms', 'CS 428 - Software Engineering', 'CS 430 - Formal Verification', 'CS 431 - Algorithmic Lang & Compilers', 'CS 450 - Computer Vision', 'CS 452 - Database Modeling Concepts', 'CS 453 - Fund of Information Retrieval', 'CS 456 - Mobile and Ubiquitous HCI', 'CS 460 - Comp Comms & Networking', 'CS 462 - Distributed System Design', 'CS 465 - Computer Security', 'CS 466 - Blockchain Technologies', 'CS 470 - Intro Artificial Intelligence', 'CS 471 - Voice Interfaces', 'CS 473 - Advanced Machine Learning', 'CS 474 - Deep Learning', 'CS 478 - Tools for Machine Learning', 'CS 479 - Intro to Machine Translation', 'CS 486 - Verification and Validation', 'CS 556 - Inter Soft Systems', 'CS 574 - Transformers for NLP', 'CS 575 - Intro to Network Science']
+      },
+      {
+        title: 'Requirement 10 — Complete 6 hours from Additional Electives',
+        courses: ['CS 401R - Topics in Computer Science', 'CS 412 - Linear Prog/Convx Optimization', 'CS 416 - Advanced Algorithms', 'CS 428 - Software Engineering', 'CS 430 - Formal Verification', 'CS 431 - Algorithmic Lang & Compilers', 'CS 450 - Computer Vision', 'CS 452 - Database Modeling Concepts', 'CS 453 - Fund of Information Retrieval', 'CS 456 - Mobile and Ubiquitous HCI', 'CS 460 - Comp Comms & Networking', 'CS 462 - Distributed System Design', 'CS 465 - Computer Security', 'CS 466 - Blockchain Technologies', 'CS 470 - Intro Artificial Intelligence', 'CS 471 - Voice Interfaces', 'CS 473 - Advanced Machine Learning', 'CS 474 - Deep Learning', 'CS 479 - Intro to Machine Translation', 'CS 486 - Verification and Validation', 'CS 498R - Undergraduate Special Projects', 'CS 500 - Business Career Essentials', 'CS 501R - Adv Topics in Computer Sci', 'CS 513 - Robust Control', 'CS 556 - Inter Soft Systems', 'CS 574 - Transformers for NLP', 'CS 575 - Intro to Network Science', 'CS 580 - Theory of Predictive Modeling', 'CSANM 210 - Visual Narrative', 'CSANM 252 - Intro 3D Animation', 'CSANM 258 - Scripting for Animation', 'CSANM 340 - Game Design', 'CSANM 342 - Real-time Techniques', 'CSANM 351R - Lighting for 3D Graphics', 'CSANM 353 - Previsualization', 'CSANM 354 - Materials and Surfacing', 'CSANM 355 - Photography for Animation', 'CSANM 452 - Senior Film Production 2', 'CSANM 454 - Advanced Shading', 'CSANM 458R - 3D Visual Effects', 'DESAN 364R - Digital Sculpting', 'EC EN 425 - Real-Time Operating Systems']
+      },
+      {
+        title: 'Requirement 11 — Complete 1 of 3 Art History Courses',
+        courses: ['ARTHC 111 - Introduction to Art History', 'ARTHC 202 - World Civilization Since 1500', 'TMA 294 - History of Animation']
+      },
+      {
+        title: 'Requirement 12 — Senior Exit Interview',
+        courses: ['Complete Senior Exit interview with the CS department during your last semester or term']
+      }
+    ],
     courseIds: [
-      // Prerequisites (Requirement 1)
-      "cs111", "cs191", "cs235", "cs291", "csanm150", "desan101",
-      // Core after admission (Requirement 2)
-      "cs224", "cs236", "cs240", "cs312", "cs324", "cs355", "cs455", "csanm250",
-      // Supporting courses (Requirements 3-5)
-      "math112", "math213", "math215", "phscs121", "wrtg316",
-      // Animation specialization (Requirements 6-8)
-      "csanm342", "csanm354", "cs404", "desan460",
-      "csanm352", "csanm450", "csanm452", "csanm459", "csanm460",
-      // CS Electives (Requirement 9)
-      "cs252", "cs256", "cs260", "cs270", "cs329", "cs330", "cs340", "cs345", 
-      "cs356", "cs393", "cs401r", "cs412", "cs416", "cs428", "cs430", "cs431",
-      "cs450", "cs452", "cs453", "cs456", "cs460", "cs462", "cs465", "cs466",
-      "cs470", "cs471", "cs473", "cs474", "cs478", "cs479", "cs486", "cs556",
-      "cs574", "cs575",
-      // Additional electives (Requirement 10)
-      "cs498r", "cs500", "cs501r", "cs513", "cs580",
-      "csanm210", "csanm252", "csanm258", "csanm340", "csanm351r", "csanm353",
-      "csanm355", "csanm452", "csanm454", "csanm458r", "desan364r", "ecen425",
-      // Art history requirement
-      "arthc111", "arthc202", "tma294"
+      // Requirement 1 - Prerequisites (6 courses)
+      'cs111', 'cs191', 'cs235', 'cs291', 'csanm150', 'desan101',
+      // Requirement 2 - Core after admission (8 courses)
+      'cs224', 'cs236', 'cs240', 'cs312', 'cs324', 'cs355', 'cs455', 'csanm250',
+      // Requirement 3 - Supporting courses (5 courses)
+      'math112', 'math213', 'math215', 'phscs121', 'wrtg316',
+      // Requirement 4 - Statistics (1 of 2)
+      'stat121', 'stat201',
+      // Requirement 5 - Math option (1 of 3)
+      'math113', 'math290', 'stat220',
+      // Requirement 6 - Animation specialization (1 of 2)
+      'csanm342', 'csanm354',
+      // Requirement 7 - Ethics (1 of 2)
+      'cs404', 'desan460',
+      // Requirement 8 - Production courses (6 hours)
+      'csanm352', 'csanm450', 'csanm452', 'csanm459', 'csanm460',
+      // Requirement 9 - CS Electives (6 hours)
+      'cs252', 'cs256', 'cs260', 'cs270', 'cs329', 'cs330', 'cs340', 'cs345', 'cs356', 'cs393', 'cs401r', 'cs412', 'cs416', 'cs428', 'cs430', 'cs431', 'cs450', 'cs452', 'cs453', 'cs456', 'cs460', 'cs462', 'cs465', 'cs466', 'cs470', 'cs471', 'cs473', 'cs474', 'cs478', 'cs479', 'cs486', 'cs556', 'cs574', 'cs575',
+      // Requirement 10 - Additional electives (6 hours)
+      'csanm210', 'csanm252', 'csanm258', 'csanm340', 'csanm351r', 'csanm353', 'csanm355', 'csanm454', 'csanm458r', 'desan364r', 'ecen425',
+      'cs498r', 'cs500', 'cs501r', 'cs513', 'cs580',
+      // Requirement 11 - Art History (1 of 3)
+      'arthc111', 'arthc202', 'tma294'
     ]
   },
   {
-    id: "cs-bioinformatics-bs",
-    name: "Computer Science: Bioinformatics (BS)",
-    minCredits: 72,
-    maxCredits: 78,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Focuses on computational biology and data analysis.",
+    id: 'cs-bioinformatics-bs',
+    name: 'Computer Science: Bioinformatics (BS)',
+    type: 'Major',
+    college: 'Physical and Mathematical Sciences',
+    description: 'Bioinformatics is an interdisciplinary field that uses techniques from computer science to study problems in genetics and molecular biology. Brigham Young University offers two paths to studying Bioinformatics: The Bioinformatics degree in the Biology department and The Computer Science emphasis in Bioinformatics. Both degrees provide an entry into careers in computational biology, with the Biology program providing more depth in Biology courses and the CS degree providing more depth in computer science classes.',
+    shortDescription: 'Interdisciplinary program combining computer science with biology and genetics for computational biology careers.',
+    totalHours: '79-81',
+    careers: 'Students are prepared for software development with a specialty in biotechnology. Students can also pursue a graduate degree in Business, Law, Medicine (general medicine, dentistry and veterinary medicine) Computer Science and the Sciences (Biology, Bioinformatics, Biomedical Engineering, Computational Biology and Genetics).',
+    requirements: [
+      {
+        title: 'Complete 10 Computer Science Core Courses',
+        courses: ['CS 111', 'CS 191', 'CS 224', 'CS 235', 'CS 236', 'CS 240', 'CS 270', 'CS 291', 'CS 312', 'CS 404']
+      },
+      {
+        title: 'Complete 7 Biology Core Courses',
+        courses: ['BIO 130', 'BIO 165', 'BIO 264', 'BIO 364', 'BIO 465', 'MMBIO 240', 'PWS 340']
+      },
+      {
+        title: 'Complete 5 Supporting Courses',
+        courses: ['CHEM 105', 'MATH 112', 'MATH 213', 'MATH 215', 'WRTG 316']
+      },
+      {
+        title: 'Complete 1 of 2 Evolution Courses',
+        courses: ['BIO 250', 'BIO 420']
+      },
+      {
+        title: 'Complete 1 of 2 Advanced Machine Learning Courses',
+        courses: ['CS 473', 'CS 474']
+      },
+      {
+        title: 'Complete 12 hours of electives from approved course list',
+        courses: ['Various elective options available']
+      },
+      {
+        title: 'Complete Senior Exit Interview',
+        courses: ['Complete Senior Exit Interview with the CS department']
+      }
+    ],
     courseIds: [
-      "cs111", "cs235", "cs240", "cs312", "cs324", "cs340", "cs404", "cs470", "cs472"
+      // Requirement 1 - CS Core (10 courses)
+      'cs111', 'cs191', 'cs224', 'cs235', 'cs236', 'cs240', 'cs270', 'cs291', 'cs312', 'cs404',
+      // Requirement 2 - Biology Core (7 courses)
+      'bio130', 'bio165', 'bio264', 'bio364', 'bio465', 'mmbio240', 'pws340',
+      // Requirement 3 - Supporting courses (5 courses)
+      'chem105', 'math112', 'math213', 'math215', 'wrtg316',
+      // Requirement 4 - Evolution (1 of 2)
+      'bio250', 'bio420',
+      // Requirement 5 - Advanced ML (1 of 2)
+      'cs473', 'cs474',
+      // Requirement 6 - Electives (12 hours)
+      'bio463', 'cs256', 'cs260', 'cs329', 'cs330', 'cs345', 'cs355', 'cs356', 'cs393', 'cs401r', 'cs405', 'cs412', 'cs416', 'cs428', 'cs430', 'cs431', 'cs450', 'cs452', 'cs453', 'cs455', 'cs456', 'cs460', 'cs462', 'cs465', 'cs466', 'cs470', 'cs471', 'cs478', 'cs479', 'cs480', 'cs481', 'cs482', 'cs483', 'cs486', 'cs493r', 'cs513', 'cs556', 'cs574', 'cs575', 'cs580',
+      'cs497r', 'cs498r'
     ]
   },
   {
-    id: "cs-software-engineering-bs",
-    name: "Computer Science: Software Engineering (BS)",
-    minCredits: 75,
-    maxCredits: 80,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation. Emphasizes large-scale software development practices.",
+    id: 'cs-software-engineering-bs',
+    name: 'Computer Science: Software Engineering (BS)',
+    type: 'Major',
+    college: 'Physical and Mathematical Sciences',
+    description: 'Software engineering is a branch of computer science that uses methods and principles of design, engineering and testing to create and maintain large and sophisticated software products. Modern software is often composed from distributed components, communicating over the Internet, requiring sophisticated designs to ensure they operate efficiently. Software engineers have a variety of concerns, including customer requirements, user interfaces, management and team dynamics, maintenance, reliability, and budgets. Software developers are among the most highly paid and highly sought-after employees in today\'s workforce.',
+    shortDescription: 'Focuses on large-scale software development, engineering principles, and project management for enterprise applications.',
+    totalHours: '74-76',
+    careers: 'The day-to-day tasks of a software engineer are varied and diverse. Some of the tasks that such professionals perform include: Creating Software Plans and Designs, Working and communicating with large groups of people, Creating new software products, Developing new software features for existing products, Upgrading systems to ensure continued and future compatibility, Working with very large code bases, Integrating smaller pieces of software into larger and more complex systems. Software engineer roles include: Programmer/Software Engineer, Quality Assurance Engineer, UI/UX Designer, Software Architect, Manager, Software Engineering Director, VP of Technology, Chief Technology Officer (CTO).',
+    requirements: [
+      { title: 'Complete 19 Core Courses', courses: ['CS 111', 'CS 191', 'CS 202', 'CS 203', 'CS 204', 'CS 224', 'CS 235', 'CS 236', 'CS 240', 'CS 260', 'CS 291', 'CS 312', 'CS 324', 'CS 329', 'CS 340', 'CS 404', 'CS 452', 'CS 480', 'CS 481'] },
+      { title: 'Complete 5 Supporting Courses', courses: ['MATH 112', 'MATH 213', 'MATH 215', 'PHSCS 121', 'WRTG 316'] },
+      { title: 'Complete 1 of 2 Statistics Courses', courses: ['STAT 121', 'STAT 201'] },
+      { title: 'Complete 1 of 3 Math Options', courses: ['MATH 113', 'MATH 290', 'STAT 220'] },
+      { title: 'Complete 2 of 11 Software Engineering Focus Courses', courses: ['CS 256', 'CS 270', 'CS 330', 'CS 345', 'CS 356', 'CS 453', 'CS 456', 'CS 460', 'CS 462', 'CS 465', 'CS 473', 'CS 486'] },
+      { title: 'Complete 3 hours of additional electives', courses: ['Various elective options available'] },
+      { title: 'Complete Senior Exit Interview', courses: ['Complete Senior Exit Interview with the CS department'] }
+    ],
     courseIds: [
-      "cs111", "cs235", "cs240", "cs312", "cs324", "cs340", "cs404", "cs428", "cs329"
+      // Requirement 1 - Core courses (19 courses)
+      'cs111', 'cs191', 'cs202', 'cs203', 'cs204', 'cs224', 'cs235', 'cs236', 'cs240', 'cs260', 'cs291', 'cs312', 'cs324', 'cs329', 'cs340', 'cs404', 'cs452', 'cs480', 'cs481',
+      // Requirement 2 - Supporting courses (5 courses)
+      'math112', 'math213', 'math215', 'phscs121', 'wrtg316',
+      // Requirement 3 - Statistics (1 of 2)
+      'stat121', 'stat201',
+      // Requirement 4 - Math option (1 of 3)
+      'math113', 'math290', 'stat220',
+      // Requirement 5 - SE Focus courses (2 of 11)
+      'cs256', 'cs270', 'cs330', 'cs345', 'cs356', 'cs453', 'cs456', 'cs460', 'cs462', 'cs465', 'cs473', 'cs486',
+      // Requirement 6 - Additional electives (3 hours)
+      'cs252', 'cs355', 'cs393', 'cs401r', 'cs405', 'cs412', 'cs416', 'cs430', 'cs450', 'cs455', 'cs466', 'cs470', 'cs471', 'cs474', 'cs479', 'cs493r', 'cs497r', 'cs498r', 'cs501r', 'cs513', 'cs556', 'cs574', 'cs575', 'cs580',
+      'ecen424', 'ecen425', 'itc567', 'math411', 'math431', 'math485'
     ]
   },
   {
-    id: "machine-learning-bs",
-    name: "Machine Learning (BS)",
-    minCredits: 76,
-    maxCredits: 82,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate. Focuses on AI and machine learning technologies.",
+    id: 'machine-learning-bs',
+    name: 'Machine Learning (BS)',
+    type: 'Major',
+    college: 'Physical and Mathematical Sciences',
+    description: 'Machine Learning is the fundamental technology that enables computer programs to mimic the ability of humans to learn and reason. This technology powers things like self-driving cars, facial recognition, algorithms to identify what is in a photo, fraud detection for credit card companies, systems that identify which traffic entering a network might be malicious, programs that decide whether a medical image indicates a sign of a significant disease, and chat bots.',
+    shortDescription: 'Specialized degree in machine learning, AI, and data science for cutting-edge technology careers.',
+    totalHours: '74',
+    careers: 'The BYU Machine Learning major prepares students for competitive positions in many of the world\'s best companies. The major also serves as excellent preparation for graduate work in machine learning and the broader field of artificial intelligence. Graduates of this program will be able to curate and maintain data, build models to effectively analyze this data, and understand the principles of modeling and the basis of the models themselves in order to draw accurate conclusions from these analyses. Graduates will be able to provide insight into how machine learning can be used in a variety of applications, and will be able to follow ethical and responsible practices when designing applications.',
+    requirements: [
+      { title: 'Complete 12 Core CS Courses', courses: ['CS 111', 'CS 180', 'CS 191', 'CS 235', 'CS 236', 'CS 240', 'CS 270', 'CS 291', 'CS 312', 'CS 404', 'CS 473', 'CS 474'] },
+      { title: 'Complete 3 Math Core Courses', courses: ['MATH 112', 'MATH 290', 'MATH 380'] },
+      { title: 'Complete 2 Linear Algebra Courses', courses: ['MATH 213', 'MATH 215'] },
+      { title: 'Complete 1 of 2 Statistics Foundation Courses', courses: ['STAT 121', 'STAT 201'] },
+      { title: 'Complete 1 of 3 Advanced Statistics Courses', courses: ['ECON 388', 'STAT 220', 'STAT 330'] },
+      { title: 'Complete 3 of 7 ML Specialization Courses', courses: ['CS 412', 'CS 450', 'CS 470', 'CS 471', 'CS 479', 'CS 574', 'MATH 522'] },
+      { title: 'Complete 6 hours from Capstone options', courses: ['CS 482', 'CS 483', 'CS 497R'] },
+      { title: 'Complete 9 hours of additional electives', courses: ['Various elective options available'] },
+      { title: 'Complete Senior Exit Interview', courses: ['Complete Senior Exit Interview with the CS department'] }
+    ],
     courseIds: [
-      "cs111", "cs235", "cs240", "cs312", "cs470", "cs472", "cs474", "cs473", "cs450"
+      // Requirement 1 - Core CS (12 courses)
+      'cs111', 'cs180', 'cs191', 'cs235', 'cs236', 'cs240', 'cs270', 'cs291', 'cs312', 'cs404', 'cs473', 'cs474',
+      // Requirement 2 - Math Core (3 courses)
+      'math112', 'math290', 'math380',
+      // Requirement 3 - Linear Algebra (2 courses)
+      'math213', 'math215',
+      // Requirement 4 - Statistics foundation (1 of 2)
+      'stat121', 'stat201',
+      // Requirement 5 - Advanced Statistics (1 of 3)
+      'econ388', 'stat220', 'stat330',
+      // Requirement 6 - ML Specialization (3 of 7)
+      'cs412', 'cs450', 'cs470', 'cs471', 'cs479', 'cs574', 'math522',
+      // Requirement 7 - Capstone options
+      'cs482', 'cs483', 'cs497r',
+      // Requirement 8 - Additional electives (9 hours)
+      'cs452', 'cs453', 'cs513', 'cs575', 'cs580',
+      'econ378', 'ling581', 'math113', 'math314', 'math413', 'math431',
+      'stat240', 'stat251', 'stat340', 'stat386'
     ]
   },
   {
-    id: "cs-minor",
-    name: "Computer Science (Minor)",
-    minCredits: 18,
-    maxCredits: 21,
-    description: "A focused program providing essential programming and computer science skills to complement any major. Perfect for students wanting to add technical expertise to their primary field of study.",
+    id: 'cs-minor',
+    name: 'Computer Science (Minor)',
+    type: 'Minor',
+    college: 'Physical and Mathematical Sciences',
+    description: 'A Computer Science minor provides students from other majors with a way to demonstrate that they have a basic level of competency in computing. As technology becomes increasingly ubiquitous, affecting everything from medical breakthroughs to the appliances in our kitchens, it is critical for the general student population to gain computing skills. Training in computer science gives students skills they can use in the workplace and enables students to develop computational solutions in various fields of study.',
+    shortDescription: 'Essential computer science foundation for students from other majors seeking computing skills.',
+    totalHours: '19',
+    careers: 'The minor provides students with 13 hours (four courses) of training. This foundation is complemented by six additional hours (two courses) of electives in computer science that will deepen the student\'s knowledge in an area of computing most appropriate for their area of interest. For example, there are options for students wishing to emphasize web development, programming languages, computer systems, machine learning, algorithms, and a variety of other fields.',
+    requirements: [
+      { title: 'Complete 4 Core Courses', courses: ['CS 111', 'CS 235', 'CS 236', 'CS 240'] },
+      { title: 'Complete 6 hours from approved CS electives', courses: ['Various elective options available'] },
+      { title: 'Maintain grades of C- or better', courses: ['Maintain grades of C- or better in all minor courses'] }
+    ],
     courseIds: [
-      "cs111", "cs235", "cs240", "cs260", "cs324", "cs340"
+      // Requirement 1 - Core (4 courses)
+      'cs111', 'cs235', 'cs236', 'cs240',
+      // Requirement 2 - Electives (6 hours from many options)
+      'cs180', 'cs201r', 'cs252', 'cs256', 'cs260', 'cs270', 'cs301r', 'cs312', 'cs324', 'cs329', 'cs330', 'cs340', 'cs345', 'cs355', 'cs356', 'cs393', 'cs401r', 'cs412', 'cs416', 'cs428', 'cs430', 'cs431', 'cs450', 'cs452', 'cs453', 'cs455', 'cs456', 'cs460', 'cs462', 'cs465', 'cs466', 'cs470', 'cs471', 'cs473', 'cs474', 'cs479', 'cs486',
+      'cs224', 'ecen224'
     ]
   },
   {
-    id: "cs-teaching-minor",
-    name: "Computer Science Teaching (Minor)",
-    minCredits: 15,
-    maxCredits: 18,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Prepares students to teach computer science concepts.",
+    id: 'cs-teaching-minor',
+    name: 'Computer Science Teaching (Minor)',
+    type: 'Minor',
+    college: 'Physical and Mathematical Sciences',
+    description: 'The Computer Science Teaching minor is only offered to education majors and is designed to prepare students to teach in public schools. A teaching minor may only be received by students graduating with a teaching major. In order to graduate with this minor, students are required to complete Utah State Office of Education licensing requirements.',
+    shortDescription: 'Prepares education majors to teach computer science in public schools with Utah licensing.',
+    totalHours: '22',
+    careers: 'This minor prepares education majors to teach computer science in public schools and meets the educational requirements designed to lead to an occupationally required professional license or certificate in the state of Utah.',
+    requirements: [
+      { title: 'Complete 6 Core Courses', courses: ['CS 111', 'CS 224', 'CS 235', 'CS 236', 'CS 240', 'TES 377'] },
+      { title: 'Complete Student Teaching Course', courses: ['CS 477R'] },
+      { title: 'Complete background clearance', courses: ['Complete FBI fingerprinting and background clearance'] },
+      { title: 'Maintain academic standards', courses: ['Maintain grades of C or better', 'Maintain cumulative GPA of 2.7 or higher'] },
+      { title: 'Complete licensing requirements', courses: ['Complete Utah State Office of Education licensing requirements'] }
+    ],
     courseIds: [
-      "cs111", "cs235", "cs240", "cs260", "cs340"
+      // Requirement 1 - Core courses (6 courses)
+      'cs111', 'cs224', 'cs235', 'cs236', 'cs240', 'tes377',
+      // Requirement 2 - Student Teaching (1 course)
+      'cs477r'
     ]
   }
 ];

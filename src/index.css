@@ -60,10 +60,48 @@ h1 {
 .filterbar {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 12px 16px;
+  gap: 0;
+  padding: 0;
   border-bottom: 1px solid #eee;
   background: #fff;
+}
+
+.filterbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  background: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+.filterbar-header:hover {
+  background: #e9ecef;
+}
+
+.filterbar-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #002E5D;
+}
+
+.dropdown-arrow {
+  font-size: 12px;
+  color: #666;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.expanded {
+  transform: rotate(180deg);
+}
+
+.filterbar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 12px 16px;
 }
 .filterbar input {
   padding: 10px 12px;
@@ -259,6 +297,7 @@ h1 {
   margin-top: 0;
   font-size: 18px;
 }
+
 .detail .desc { color: #444; }
 .detail .row {
   display: grid;
@@ -277,10 +316,12 @@ h1 {
 .program-actions {
   margin-top: 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.view-courses-btn {
+/* Primary button style (View Requirements) */
+.view-requirements-btn.primary {
   background: #002E5D;
   color: white;
   border: 2px solid #002E5D;
@@ -291,9 +332,26 @@ h1 {
   transition: all 0.2s;
 }
 
-.view-courses-btn:hover {
+.view-requirements-btn.primary:hover {
   background: #001a3a;
   border-color: #001a3a;
+  transform: translateY(-1px);
+}
+
+/* Secondary button style (Go to Courses) */
+.view-courses-btn.secondary {
+  background: transparent;
+  color: #002E5D;
+  border: 2px solid #002E5D;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-courses-btn.secondary:hover {
+  background: #f0f5ff;
   transform: translateY(-1px);
 }
 
@@ -373,4 +431,265 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+
+/* ===========================
+   Program Expanded Layout
+   =========================== */
+.programs-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
+  grid-column: 1 / -1;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.programs-layout .left {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
+.programs-layout .right {
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+
+.programs-layout.expanded .left {
+  transform: translateX(-100%);
+}
+
+.programs-layout.expanded .right {
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.programs-layout.expanded {
+  grid-template-columns: 1fr;
+}
+
+.programs-layout .full-width {
+  grid-column: 1 / -1;
+}
+
+/* Program Detail Panel Expanded States */
+.detail.expanded {
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: static;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #002E5D;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.back-button:hover {
+  background: #f0f8ff;
+}
+
+.detail.expanded h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.detail.expanded .desc {
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.requirements-section {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.requirements-section h3 {
+  margin: 0 0 16px 0;
+  color: #002E5D;
+  font-size: 18px;
+}
+
+.requirement-group {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+}
+
+.requirement-title {
+  margin: 0 0 8px 0;
+  color: #002E5D;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.requirement-description {
+  margin: 0 0 12px 0;
+  color: #666;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.requirement-courses {
+  margin: 0;
+  padding-left: 20px;
+  color: #555;
+}
+
+.requirement-courses li {
+  margin: 6px 0;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.requirements-list {
+  margin: 0;
+  padding-left: 20px;
+  color: #555;
+}
+
+.requirements-list li {
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
+.view-requirements-btn {
+  background: #f8f9fa;
+  color: #002E5D;
+  border: 1px solid #dee2e6;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-left: 12px;
+}
+
+.view-requirements-btn:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+/* ===========================
+   Course Modal
+   =========================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: modalSlideIn 0.2s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.modal-body {
+  padding: 60px 30px 30px;
+}
+
+.modal-body h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #002E5D;
+}
+
+.modal-body .desc {
+  color: #444;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.modal-body .row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.modal-body .outcomes {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+/* Course link styles */
+.course-link {
+  color: #002E5D;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.course-link:hover {
+  color: #001a3a;
+  border-bottom-color: #001a3a;
 }

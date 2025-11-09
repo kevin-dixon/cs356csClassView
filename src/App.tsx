@@ -4,6 +4,7 @@ import CourseGrid from "./components/CourseGrid";
 import DetailPanel from "./components/DetailPanel";
 import ProgramList from "./components/ProgramList";
 import ProgramDetailPanel from "./components/ProgramDetailPanel";
+import CourseModal from "./components/CourseModal";
 import type { Course, Requirement, Topic, Semester, Program, Department } from "./data";
 import { courses as ALL, programs } from "./data";
 import "./index.css";
@@ -23,6 +24,11 @@ export default function App() {
   
   // Program-related state
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [isProgramExpanded, setIsProgramExpanded] = useState(false);
+  
+  // Modal state
+  const [modalCourse, setModalCourse] = useState<Course | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // ✅ Combined matches: search + filters
   const matches = useMemo(() => {
@@ -68,6 +74,28 @@ export default function App() {
     setReq(null);
     setTopic(null);
     setSem([]);
+  };
+
+  // Function to handle viewing requirements (expand the panel)
+  const viewRequirementsForProgram = (programToView: Program) => {
+    setSelectedProgram(programToView);
+    setIsProgramExpanded(true);
+  };
+
+  // Function to handle back button (collapse the panel)
+  const handleBackFromRequirements = () => {
+    setIsProgramExpanded(false);
+  };
+
+  // Modal handlers
+  const handleCourseModalOpen = (course: Course) => {
+    setModalCourse(course);
+    setIsModalOpen(true);
+  };
+
+  const handleCourseModalClose = () => {
+    setIsModalOpen(false);
+    setModalCourse(null);
   };
 
   useEffect(() => {
@@ -122,24 +150,38 @@ export default function App() {
             </section>
           </>
         ) : (
-          <>
-            <aside className="left">
-              <ProgramList
-                programs={programs}
-                selected={selectedProgram}
-                onSelect={setSelectedProgram}
-              />
-            </aside>
+          <div className={`programs-layout ${isProgramExpanded ? 'expanded' : ''}`}>
+            {!isProgramExpanded && (
+              <aside className="left">
+                <ProgramList
+                  programs={programs}
+                  selected={selectedProgram}
+                  onSelect={setSelectedProgram}
+                />
+              </aside>
+            )}
 
-            <section className="right">
+            <section className={isProgramExpanded ? 'full-width' : 'right'}>
               <ProgramDetailPanel 
                 program={selectedProgram} 
                 onViewCourses={viewCoursesForProgram}
+                onViewRequirements={viewRequirementsForProgram}
+                isExpanded={isProgramExpanded}
+                onBack={handleBackFromRequirements}
+                onCourseClick={handleCourseModalOpen}
+                allCourses={ALL}
               />
             </section>
-          </>
+          </div>
         )}
       </main>
+
+      {/* Course Modal */}
+      <CourseModal 
+        course={modalCourse}
+        isOpen={isModalOpen}
+        onClose={handleCourseModalClose}
+      />
     </div>
   );
 }
