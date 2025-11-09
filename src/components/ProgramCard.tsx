@@ -16,10 +16,10 @@ export default function ProgramCard({ program, highlighted, onSelect }: Props) {
         <div className="program-header">
           <div className="program-name">{program.name}</div>
           <div className="program-credits">
-            {program.minCredits}-{program.maxCredits} credits
+            {program.totalHours} hours
           </div>
         </div>
-        <div className="program-description">{program.description}</div>
+        <div className="program-description">{program.shortDescription}</div>
       </div>
     </button>
   );

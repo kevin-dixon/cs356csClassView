@@ -23,6 +23,7 @@ export default function App() {
   
   // Program-related state
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [isProgramExpanded, setIsProgramExpanded] = useState(false);
 
   // ✅ Combined matches: search + filters
   const matches = useMemo(() => {
@@ -68,6 +69,17 @@ export default function App() {
     setReq(null);
     setTopic(null);
     setSem([]);
+  };
+
+  // Function to handle viewing requirements (expand the panel)
+  const viewRequirementsForProgram = (programToView: Program) => {
+    setSelectedProgram(programToView);
+    setIsProgramExpanded(true);
+  };
+
+  // Function to handle back button (collapse the panel)
+  const handleBackFromRequirements = () => {
+    setIsProgramExpanded(false);
   };
 
   useEffect(() => {
@@ -122,22 +134,27 @@ export default function App() {
             </section>
           </>
         ) : (
-          <>
-            <aside className="left">
-              <ProgramList
-                programs={programs}
-                selected={selectedProgram}
-                onSelect={setSelectedProgram}
-              />
-            </aside>
+          <div className={`programs-layout ${isProgramExpanded ? 'expanded' : ''}`}>
+            {!isProgramExpanded && (
+              <aside className="left">
+                <ProgramList
+                  programs={programs}
+                  selected={selectedProgram}
+                  onSelect={setSelectedProgram}
+                />
+              </aside>
+            )}
 
-            <section className="right">
+            <section className={isProgramExpanded ? 'full-width' : 'right'}>
               <ProgramDetailPanel 
                 program={selectedProgram} 
                 onViewCourses={viewCoursesForProgram}
+                onViewRequirements={viewRequirementsForProgram}
+                isExpanded={isProgramExpanded}
+                onBack={handleBackFromRequirements}
               />
             </section>
-          </>
+          </div>
         )}
       </main>
     </div>
