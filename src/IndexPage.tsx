@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import CourseGrid from "./components/CourseGrid";
 import FilterBar from "./components/FilterBar";
 import DetailPanel from "./components/DetailPanel";
-import { courses as ALL, type Course, type Requirement, type Semester, type Topic, type Program, type Department } from "./data";
+import { courses as ALL, type Course, type Requirement, type Semester, type Topic, type Program } from "./data";
 
 export const IndexPage = () => {
     const [q, setQ] = useState("");
@@ -10,7 +10,6 @@ export const IndexPage = () => {
     const [topic, setTopic] = useState<Topic | null>(null);
     const [sem, setSem] = useState<Semester[]>([]);
     const [program, setProgram] = useState<Program | null>(null);
-    const [department, setDepartment] = useState<Department | null>(null);
     const [selected, setSelected] = useState<Course | null>(null);
 
     // ✅ Combined matches: search + filters
@@ -30,14 +29,13 @@ export const IndexPage = () => {
         const hitTopic = !topic || c.topics.includes(topic);
         const hitSem = sem.length === 0 || sem.some(s => c.semesters.includes(s));
         const hitProgram = !program || program.courseIds.includes(c.id);
-        const hitDepartment = !department || c.department === department;
 
-        if (hitQ && hitReq && hitTopic && hitSem && hitProgram && hitDepartment) {
+        if (hitQ && hitReq && hitTopic && hitSem && hitProgram) {
             set.add(c.id);
         }
         });
         return set;
-    }, [q, req, topic, sem, program, department]);
+    }, [q, req, topic, sem, program]);
 
     const clear = () => {
         setQ("");
@@ -45,7 +43,6 @@ export const IndexPage = () => {
         setTopic(null);
         setSem([]);
         setProgram(null);
-        setDepartment(null);
     };
 
     useEffect(() => {
@@ -73,7 +70,6 @@ export const IndexPage = () => {
                 topic={topic} setTopic={setTopic}
                 sem={sem} setSem={setSem}
                 program={program} setProgram={setProgram}
-                department={department} setDepartment={setDepartment}
                 clear={clear}
             />
             <DetailPanel course={selected} />

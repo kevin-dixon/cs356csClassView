@@ -22,6 +22,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Scraping
+scripts/
+converted-courses.ts
 
 pnpm-lock.yaml
 yarn.lock
